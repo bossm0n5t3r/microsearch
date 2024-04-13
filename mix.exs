@@ -49,7 +49,8 @@ defmodule Microsearch.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:plug_cowboy, "~> 2.5"},
       {:fast_rss, "~> 0.5.0"},
-      {:explorer, "~> 0.8.1"}
+      {:explorer, "~> 0.8.1"},
+      {:req, "~> 0.4.0"}
     ]
   end
 
