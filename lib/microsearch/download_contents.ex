@@ -1,6 +1,7 @@
 defmodule Microsearch.DownloadContents do
   alias Microsearch.FileUtil
 
+  @spec download_contents() :: :ok
   def download_contents() do
     post_urls =
       FileUtil.read_lines("../../feeds.txt")
@@ -14,7 +15,6 @@ defmodule Microsearch.DownloadContents do
     content = Explorer.Series.from_list(contents)
 
     Explorer.DataFrame.new(url: url, content: content)
-    |> IO.inspect(label: "dataframe")
     |> Explorer.DataFrame.to_parquet!("./output.parquet")
   end
 
