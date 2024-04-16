@@ -50,7 +50,8 @@ defmodule Microsearch.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:fast_rss, "~> 0.5.0"},
       {:explorer, "~> 0.8.1"},
-      {:req, "~> 0.4.0"}
+      {:req, "~> 0.4.0"},
+      {:cachex, "~> 3.6"}
     ]
   end
 
