@@ -3,19 +3,28 @@ defmodule Microsearch.DownloadContents do
 
   @spec download_contents() :: :ok
   def download_contents() do
-    post_urls =
+    tasks =
       FileUtil.read_lines("../../feeds.txt")
-      |> Enum.flat_map(fn feed_url -> get_links_from_feed(feed_url) end)
+      |> Enum.map(fn feed_url ->
+        Task.async(fn -> process_feed(feed_url) end)
+      end)
 
-    contents =
-      post_urls
-      |> Enum.map(fn post_url -> get_clean_content(post_url) end)
+    url_and_contents = Task.await_many(tasks, :infinity) |> List.flatten()
+
+    post_urls = url_and_contents |> Enum.map(fn {url, _} -> url end)
+    contents = url_and_contents |> Enum.map(fn {_, content} -> content end)
 
     url = Explorer.Series.from_list(post_urls)
     content = Explorer.Series.from_list(contents)
 
     Explorer.DataFrame.new(url: url, content: content)
     |> Explorer.DataFrame.to_parquet!("./output.parquet")
+  end
+
+  defp process_feed(feed_url) do
+    post_urls = get_links_from_feed(feed_url)
+    contents = post_urls |> Enum.map(fn post_url -> get_clean_content(post_url) end)
+    Enum.zip(post_urls, contents)
   end
 
   defp get_links_from_feed(feed_url) do
