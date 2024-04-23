@@ -12,4 +12,16 @@ defmodule Microsearch.FileUtil do
         System.halt(1)
     end
   end
+
+  def read_parquet_to_dataframe(filename) do
+    Explorer.DataFrame.from_parquet(filename)
+    |> case do
+      {:ok, df} ->
+        df
+
+      _ ->
+        IO.puts("Error: #{filename} file not found")
+        System.halt(1)
+    end
+  end
 end
