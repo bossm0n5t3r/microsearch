@@ -16,7 +16,8 @@ defmodule Microsearch.Application do
       # Start a worker by calling: Microsearch.Worker.start_link(arg)
       # {Microsearch.Worker, arg},
       # Start to serve requests, typically the last entry
-      MicrosearchWeb.Endpoint
+      MicrosearchWeb.Endpoint,
+      {Cachex, name: :microsearch_cache},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
