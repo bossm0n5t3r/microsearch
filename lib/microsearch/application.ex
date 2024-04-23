@@ -17,7 +17,8 @@ defmodule Microsearch.Application do
       # {Microsearch.Worker, arg},
       # Start to serve requests, typically the last entry
       MicrosearchWeb.Endpoint,
-      {Cachex, name: :microsearch_cache},
+      Supervisor.child_spec({Cachex, name: :documents}, id: :documents),
+      Supervisor.child_spec({Cachex, name: :index}, id: :index)
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
