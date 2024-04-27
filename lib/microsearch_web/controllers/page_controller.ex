@@ -23,6 +23,5 @@ defmodule MicrosearchWeb.PageController do
     |> Map.to_list()
     |> Enum.sort(fn {_, score1}, {_, score2} -> score1 > score2 end)
     |> Enum.take(n)
-    |> Map.new()
   end
 end
