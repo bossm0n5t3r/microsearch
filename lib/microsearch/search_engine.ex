@@ -1,5 +1,17 @@
 defmodule Microsearch.SearchEngine do
+  use Supervisor
+
   alias Microsearch.FileUtil
+
+  def start_link(arg) do
+    Supervisor.start_link(__MODULE__, arg, name: __MODULE__)
+  end
+
+  @impl true
+  def init(_) do
+    bulk_index()
+    Supervisor.init([], strategy: :one_for_one)
+  end
 
   def bulk_index() do
     # Read parquet file

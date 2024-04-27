@@ -19,7 +19,8 @@ defmodule Microsearch.Application do
       MicrosearchWeb.Endpoint,
       Supervisor.child_spec({Cachex, name: :documents}, id: :documents),
       Supervisor.child_spec({Cachex, name: :index}, id: :index),
-      Supervisor.child_spec({Cachex, name: :avdl}, id: :avdl)
+      Supervisor.child_spec({Cachex, name: :avdl}, id: :avdl),
+      {Microsearch.SearchEngine, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
