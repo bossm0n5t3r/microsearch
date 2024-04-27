@@ -18,6 +18,7 @@ defmodule MicrosearchWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/results", PageController, :search_results
   end
 
   # Other scopes may use custom stacks.
