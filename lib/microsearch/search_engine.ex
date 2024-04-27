@@ -63,8 +63,15 @@ defmodule Microsearch.SearchEngine do
     normalize_string(query)
     |> String.split(" ", trim: true)
     |> Enum.reduce(%{}, fn keyword, acc ->
-      kw_urls_score = bm25(keyword)
-      update_url_scores(acc, kw_urls_score)
+      bm25(keyword)
+      |> Enum.map(fn {url, score} ->
+        if Map.has_key?(acc, url) do
+          {url, acc[url] + score}
+        else
+          {url, score}
+        end
+      end)
+      |> Enum.into(acc)
     end)
   end
 
@@ -123,16 +130,5 @@ defmodule Microsearch.SearchEngine do
     Cachex.get(:documents, url)
     |> elem(1)
     |> String.length()
-  end
-
-  defp update_url_scores(old, new) do
-    for {url, score} <- new do
-      if Map.has_key?(old, url) do
-        {url, old[url] + score}
-      else
-        {url, score}
-      end
-    end
-    |> Map.new()
   end
 end
