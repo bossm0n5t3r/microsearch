@@ -51,7 +51,8 @@ defmodule Microsearch.MixProject do
       {:fast_rss, "~> 0.5.0"},
       {:explorer, "~> 0.8.1"},
       {:req, "~> 0.4.0"},
-      {:cachex, "~> 3.6"}
+      {:cachex, "~> 3.6"},
+      {:math, "~> 0.7.0"}
     ]
   end
 
