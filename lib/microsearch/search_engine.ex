@@ -35,9 +35,15 @@ defmodule Microsearch.SearchEngine do
       |> String.split(" ", trim: true)
 
     for word <- words do
-      Cachex.get_and_update(:index, "#{word}_#{url}", fn
-        nil -> 1
-        val -> val + 1
+      Cachex.get_and_update(:index, word, fn
+        nil ->
+          %{url => 1}
+
+        url_to_count ->
+          Map.get_and_update(url_to_count, url, fn
+            nil -> 1
+            count -> count + 1
+          end)
       end)
     end
 
