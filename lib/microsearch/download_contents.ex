@@ -22,7 +22,10 @@ defmodule Microsearch.DownloadContents do
   end
 
   defp process_feed(feed_url) do
-    post_urls = get_links_from_feed(feed_url)
+    post_urls =
+      get_links_from_feed(feed_url)
+      |> Enum.filter(fn url -> url != nil && url != "" end)
+
     contents = post_urls |> Enum.map(fn post_url -> get_clean_content(post_url) end)
     Enum.zip(post_urls, contents)
   end
