@@ -1,0 +1,7 @@
+<h1>Search Results - <%= @query %></h1>
+<br />
+<ul>
+  <%= for result <- @results do %>
+    <li><a href={elem(result, 0)}><%= elem(result, 0) %></a> - Score: <%= elem(result, 1) %></li>
+  <% end %>
+</ul>
