@@ -15,7 +15,8 @@ defmodule Microsearch.SearchEngine do
 
   def bulk_index() do
     # Read parquet file
-    dataframe = FileUtil.read_parquet_to_dataframe("./output.parquet")
+    project_root = Application.fetch_env!(:microsearch, :project_root)
+    dataframe = FileUtil.read_parquet_to_dataframe("#{project_root}/output.parquet")
 
     # Create documents (zip with url and content)
     urls = dataframe[:url] |> Explorer.Series.to_list()

@@ -30,6 +30,8 @@ config :microsearch, MicrosearchWeb.Endpoint,
 # at the `config/runtime.exs`.
 config :microsearch, Microsearch.Mailer, adapter: Swoosh.Adapters.Local
 
+config :microsearch, project_root: File.cwd!
+
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",
